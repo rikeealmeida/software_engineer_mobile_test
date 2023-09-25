@@ -4,11 +4,10 @@ import 'package:desafio_software_engineer_mobileflutter/services/product_service
 import 'package:flutter/material.dart';
 
 class ProductStore extends ValueNotifier<List<ProductModel>> {
-  final ProductService productService = ProductService();
-  bool isLoading = false;
-  List<ProductModel> products = [];
-
   ProductStore(super.value);
+  final ProductService productService = ProductService();
+  List<ProductModel> products = [];
+  bool isLoading = false;
 
   Future<void> getProducts() async {
     isLoading = true;

@@ -22,7 +22,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
+          shadowColor: Colors.white,
+          surfaceTintColor: Colors.white,
           backgroundColor: Colors.white,
           foregroundColor: Color(0xff37474f),
           titleTextStyle: TextStyle(

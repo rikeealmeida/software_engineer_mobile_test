@@ -94,7 +94,7 @@ class _ProductCardState extends State<ProductCard> {
                           ],
                         ),
                         widget.isFromFavoritePage
-                            ? SizedBox()
+                            ? const SizedBox()
                             : InkWell(
                                 onTap: widget.onTap,
                                 child: widget.isFavorite
