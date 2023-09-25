@@ -1,7 +1,7 @@
-import 'package:desafio_software_engineer_mobileflutter/components/custom_app_bar.dart';
 import 'package:desafio_software_engineer_mobileflutter/components/custom_search_field.dart';
 import 'package:desafio_software_engineer_mobileflutter/components/product_card.dart';
 import 'package:desafio_software_engineer_mobileflutter/pages/favorites_page.dart';
+import 'package:desafio_software_engineer_mobileflutter/states/favorites_store.dart';
 import 'package:desafio_software_engineer_mobileflutter/states/product_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,13 +14,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = TextEditingController();
-  final productStore = ProductStore();
-
+  final ProductStore productStore = ProductStore([]);
+  final FavoriteStore favoriteStore = FavoriteStore([]);
   @override
   void initState() {
     super.initState();
     productStore.getProducts();
     productStore.addListener(() {
+      setState(() {});
+    });
+    favoriteStore.getFavorites();
+    favoriteStore.addListener(() {
       setState(() {});
     });
   }
@@ -29,16 +33,23 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: customAppBar('Products', [
-          IconButton(
-            tooltip: 'Favorites',
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const FavoritesPage()));
-            },
-            icon: const Icon(Icons.favorite_outline),
-          ),
-        ]),
+        appBar: AppBar(
+          title: const Text('Products'),
+          actions: [
+            IconButton(
+              tooltip: 'Favorites',
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (context) => const FavoritesPage()))
+                    .then(
+                      (value) => favoriteStore.getFavorites(),
+                    );
+              },
+              icon: const Icon(Icons.favorite_outline),
+            ),
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Column(
@@ -82,8 +93,22 @@ class _HomePageState extends State<HomePage> {
                             itemCount: productStore.value.length,
                             itemBuilder: (context, index) {
                               var product = productStore.value[index];
+                              var isFavorite = favoriteStore.value
+                                  .contains(product.id.toString());
                               return ProductCard(
-                                
+                                isFromFavoritePage: false,
+                                navigatorCallback: (value) =>
+                                    favoriteStore.getFavorites(),
+                                onTap: () async {
+                                  if (isFavorite) {
+                                    await favoriteStore
+                                        .removeFavorite(product.id!);
+                                  } else {
+                                    await favoriteStore
+                                        .saveFavorite(product.id!);
+                                  }
+                                },
+                                isFavorite: isFavorite,
                                 product: product,
                               );
                             },
