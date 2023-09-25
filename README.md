@@ -32,7 +32,9 @@
 
 # API
 
-1. Use a seguinte API para buscar a lista de produtos: https://fakestoreapi.com/docs 2. Use o pacote Dio para fazer requisições à API.
+1. Use a seguinte API para buscar a lista de produtos: https://fakestoreapi.com/docs
+
+2. Use o pacote Dio para fazer requisições à API.
 
 # Gerenciamento de Estado
 
@@ -44,7 +46,9 @@
 
 # Testes
 
-1. Escreva testes unitários para as regras de negócios. 2. Escreva testes de widget para a interface do usuário.
+1. Escreva testes unitários para as regras de negócios.
+
+2. Escreva testes de widget para a interface do usuário.
 
 # Design Visual
 
