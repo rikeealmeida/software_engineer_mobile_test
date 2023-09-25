@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                             itemBuilder: (context, index) {
                               var product = productStore.value[index];
                               return ProductCard(
+                                
                                 product: product,
                               );
                             },

@@ -1,5 +1,6 @@
 import 'package:desafio_software_engineer_mobileflutter/models/product_model.dart';
 import 'package:desafio_software_engineer_mobileflutter/pages/product_detail_page.dart';
+import 'package:desafio_software_engineer_mobileflutter/states/favorites_store.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatefulWidget {
@@ -11,14 +12,27 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+  final FavoriteStore favoriteStore = FavoriteStore();
+  @override
+  void initState() {
+    super.initState();
+    favoriteStore.getFavorites();
+    favoriteStore.addListener(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
+        Navigator.of(context).push(
+          MaterialPageRoute(
             builder: (context) => ProductDetailPage(
-                  productModel: widget.product,
-                )));
+              productModel: widget.product,
+            ),
+          ),
+        );
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -67,8 +81,25 @@ class _ProductCardState extends State<ProductCard> {
                         ],
                       ),
                       InkWell(
-                        onTap: () {},
-                        child: const Icon(Icons.favorite_outline),
+                        onTap: () async {
+                          if (favoriteStore.value
+                              .contains(widget.product.id.toString())) {
+                            await favoriteStore
+                                .removeFavorite(widget.product.id!);
+                          } else {
+                            await favoriteStore
+                                .saveFavorite(widget.product.id!);
+                          }
+                        },
+                        child: favoriteStore.value
+                                .contains(widget.product.id.toString())
+                            ? const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              )
+                            : const Icon(
+                                Icons.favorite_outline,
+                              ),
                       )
                     ],
                   ),

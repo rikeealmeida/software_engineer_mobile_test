@@ -1,7 +1,13 @@
 import 'package:desafio_software_engineer_mobileflutter/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.getStringList('favorites') == null) {
+    prefs.setStringList('favorites', []);
+  }
   runApp(const MyApp());
 }
 
