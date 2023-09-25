@@ -14,9 +14,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar('Product Details', [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_outline))
-      ]),
+      appBar: customAppBar(
+        'Product Details',
+        [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.favorite_outline),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [],
+      ),
     );
   }
 }
