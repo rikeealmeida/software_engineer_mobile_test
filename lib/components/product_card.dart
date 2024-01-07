@@ -1,6 +1,5 @@
 import 'package:desafio_software_engineer_mobileflutter/models/product_model.dart';
 import 'package:desafio_software_engineer_mobileflutter/pages/product_detail_page.dart';
-import 'package:desafio_software_engineer_mobileflutter/states/favorites_store.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatefulWidget {
@@ -22,15 +21,9 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  final FavoriteStore favoriteStore = FavoriteStore([]);
-
   @override
   void initState() {
     super.initState();
-    favoriteStore.getFavorites();
-    favoriteStore.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
