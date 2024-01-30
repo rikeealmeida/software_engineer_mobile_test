@@ -32,7 +32,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Favorites'),
+          title: const Text('Favoritosss'),
         ),
         body: productStore.isLoading
             ? const Center(
